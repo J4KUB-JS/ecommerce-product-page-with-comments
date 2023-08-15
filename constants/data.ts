@@ -1,4 +1,4 @@
-export const comments = {
+export const data = {
   currentUser: {
     image: {
       png: "./images/avatars/image-juliusomo.png",

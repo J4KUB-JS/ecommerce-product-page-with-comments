@@ -1,22 +1,48 @@
 import "./App.css";
-
+import { data } from "../constants/data";
+import logo from "./assets/logo.svg";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import profilePicture from "./assets/avatars/image-amyrobson.png";
+import MenuIcon from "@mui/icons-material/Menu";
 function App() {
   return (
     <>
-      <div className="font-KumbhSans">
-        <header>
-          <nav>
-            <div>{/* logo */}</div>
-            <ul>
-              <li>Collections</li>
-              <li>Men</li>
-              <li>Women</li>
-              <li>About</li>
-              <li>Contact</li>
+      <div className="font-KumbhSans max-w-screen-xl mx-auto">
+        <header className="flex w-full justify-between items-center md:px-10 px-5 py-5">
+          <nav className="flex items-center md:gap-10 gap-5">
+            <div className="md:hidden cursor-pointer active:text-orange-200">
+              <MenuIcon fontSize="large" />
+              {/* slide out menu */}
+            </div>
+            <img src={logo} />
+            <ul className="md:flex items-center gap-6 hidden">
+              <li className="hover:underline hover:text-orange-500 underline-offset-4">
+                Collections
+              </li>
+              <li className="hover:underline hover:text-orange-500 underline-offset-4">
+                Men
+              </li>
+              <li className="hover:underline hover:text-orange-500 underline-offset-4">
+                Women
+              </li>
+              <li className="hover:underline hover:text-orange-500 underline-offset-4">
+                About
+              </li>
+              <li className="hover:underline hover:text-orange-500 underline-offset-4">
+                Contact
+              </li>
             </ul>
           </nav>
-          {/* cart icon + on hover drop down*/}
-          {/* profile */}
+          <div className="flex items-center gap-6">
+            <div className="p-2 rounded-full cursor-pointer hover:bg-orange-500 hover:text-orange-50 active:bg-orange-300">
+              <ShoppingCartIcon />
+            </div>
+            {/* hover drop down */}
+            <img
+              src={profilePicture}
+              className="h-12 rounded-full border-orange-500 border-2 cursor-pointer"
+            />
+          </div>
         </header>
 
         <section id="product-page">
@@ -37,7 +63,11 @@ function App() {
             <div> Add to cart</div>
           </div>
         </section>
-        <section id="comments">{/* map thro comments */}</section>
+        <section id="comments">
+          {data.comments.map((item, index) => {
+            return <div key={index}>{item.content}</div>;
+          })}
+        </section>
       </div>
       <footer className="font-KumbhSans bg-gray-800 text-gray-50 py-1">
         Challenge by{" "}
