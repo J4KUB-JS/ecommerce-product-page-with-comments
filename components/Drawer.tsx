@@ -16,7 +16,7 @@ export const Drawer = () => {
         </div>
         <div className="drawer-side">
           <label htmlFor="my-drawer" className="drawer-overlay"></label>
-          <ul className="menu px-6 py-5 w-80 h-full bg-base-200 text-base-content text-left text-2xl font-bold space-y-5">
+          <ul className="menu px-6 py-5 w-80 h-full text-left text-2xl font-bold space-y-5 bg-gray-50">
             <label
               className="mb-5 cursor-pointer active:text-orange-200 w-8"
               htmlFor="my-drawer"

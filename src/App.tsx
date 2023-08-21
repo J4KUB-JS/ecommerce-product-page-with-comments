@@ -12,17 +12,31 @@ function App() {
   return (
     <>
       <div className="font-KumbhSans max-w-screen-xl mx-auto text-left">
-        <header className="flex w-full justify-between items-center md:px-10 px-5 py-5">
+        <header className="flex w-full justify-between items-center md:px-10 px-5 py-5 md:border-b-2 border-gray-100">
           <nav className="flex items-center md:gap-10 gap-5">
             <Drawer />
             <img src={logo} />
             <Navigation />
           </nav>
           <div className="flex items-center gap-6">
-            <div className="p-2 rounded-full cursor-pointer hover:bg-orange-500 hover:text-orange-50 active:bg-orange-300">
-              <ShoppingCartIcon />
-            </div>
             {/* hover drop down */}
+            <div className="dropdown dropdown-end">
+              <label
+                tabIndex={0}
+                className="btn btn-circle p-2 bg-transparent border-none hover:bg-orange-500 hover:text-orange-50 active:bg-orange-300"
+              >
+                <ShoppingCartIcon />
+              </label>
+              <div
+                tabIndex={0}
+                className="dropdown-content z-[1] p-0 menu drop-shadow-2xl bg-base-100 rounded-xl w-80"
+              >
+                <div className="border-b-2 border-gray-100 p-4 font-bold ">Cart</div>
+                <div className="py-16 min-h-16 font-bold text-gray-500 text-center">
+                  Your cart is empty.
+                </div>
+              </div>
+            </div>
             <img
               src={profilePicture}
               className="h-12 rounded-full border-orange-500 border-2 cursor-pointer"
@@ -30,7 +44,7 @@ function App() {
           </div>
         </header>
 
-        <section id="product-page">
+        <section id="product-page" className="px-5">
           <div id="product-photos"></div>
           <div id="product-details">
             <div>Sneaker Company</div>
