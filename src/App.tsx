@@ -60,7 +60,7 @@ function App() {
             </div>
 
             {/* counter do add number of articles */}
-            <div className="flex justify-between items-center bg-gray-700 rounded-xl p-1">
+            <div className="flex justify-between items-center dark:bg-gray-700 bg-gray-100 rounded-xl p-1">
               <div
                 className="btn p-2 bg-transparent border-none hover:bg-orange-200 hover:text-orange-500 active:bg-orange-300 rounded-xl"
                 onClick={() =>
@@ -71,7 +71,7 @@ function App() {
               >
                 <Add fontSize="large" />
               </div>
-              <div className="text-gray-50 text-xl ">{count}</div>
+              <div className="dark:text-gray-50 text-xl text-gray-800">{count}</div>
               <div
                 className="btn p-2 bg-transparent border-none hover:bg-orange-200 hover:text-orange-500 active:bg-orange-300 rounded-xl"
                 onClick={() =>
@@ -83,7 +83,7 @@ function App() {
                 <Remove fontSize="large" />
               </div>
             </div>
-            <div className="btn flex gap-5 dark:bg-orange-600 text-gray-100 rounded-xl mt-2 hover:bg-orange-200 hover:text-orange-500 active:bg-orange-300 p-1">
+            <div className="btn flex gap-5 dark:bg-orange-600 bg-orange-500 text-gray-100 rounded-xl mt-2 hover:bg-orange-200 hover:text-orange-500 active:bg-orange-300">
               <ShoppingCartIcon />
               Add to cart
             </div>
