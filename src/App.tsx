@@ -2,7 +2,7 @@ import "./App.css";
 
 import { data } from "../constants/data";
 
-import logo from "./assets/logo.svg";
+import { Logo } from "./assets/logo";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import profilePicture from "./assets/avatars/image-amyrobson.png";
 
@@ -11,11 +11,12 @@ import { Drawer, Navigation } from "../components";
 function App() {
   return (
     <>
-      <div className="font-KumbhSans max-w-screen-xl mx-auto text-left">
+      <div className="font-KumbhSans max-w-screen-xl mx-auto text-left dark:text-gray-200">
         <header className="flex w-full justify-between items-center md:px-10 px-5 py-5 md:border-b-2 border-gray-100">
           <nav className="flex items-center md:gap-10 gap-5">
             <Drawer />
-            <img src={logo} />
+            <Logo />
+            {/* <img src={logo} className=" bg-slate-50 color-slate-50 p-1" /> */}
             <Navigation />
           </nav>
           <div className="flex items-center gap-6">
@@ -29,10 +30,12 @@ function App() {
               </label>
               <div
                 tabIndex={0}
-                className="dropdown-content z-[1] p-0 menu drop-shadow-2xl bg-base-100 rounded-xl w-80"
+                className="dropdown-content z-[1] p-0 menu drop-shadow-2xl dark:bg-gray-700 rounded-xl w-80"
               >
-                <div className="border-b-2 border-gray-100 p-4 font-bold ">Cart</div>
-                <div className="py-16 min-h-16 font-bold text-gray-500 text-center">
+                <div className="border-b-2 border-gray-100 p-4 font-bold dark:text-gray-200">
+                  Cart
+                </div>
+                <div className="py-16 min-h-16 font-bold text-gray-500 text-center dark:text-gray-300">
                   Your cart is empty.
                 </div>
               </div>
@@ -68,7 +71,7 @@ function App() {
           })}
         </section>
       </div>
-      <footer className="font-KumbhSans bg-gray-800 text-gray-50 py-1">
+      <footer className="font-KumbhSans bg-gray-800 text-gray-50 dark:bg-gray-200 dark:text-gray-800 py-1">
         Challenge by{" "}
         <a
           href="https://www.frontendmentor.io/challenges/ecommerce-product-page-UPsZ9MJp6"
