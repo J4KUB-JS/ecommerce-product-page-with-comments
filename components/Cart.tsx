@@ -1,6 +1,12 @@
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { cartItem } from "../src/types";
+import productImage from "../src/assets/productPhotos/image-product-1.jpg";
+import { Delete } from "@mui/icons-material";
+interface CartProps {
+  cartItems: cartItem[];
+}
 
-export const Cart = () => {
+export const Cart = ({ cartItems }: CartProps) => {
   return (
     <div className="dropdown dropdown-end">
       <label
@@ -16,8 +22,28 @@ export const Cart = () => {
         <div className="border-b-2 border-gray-100 p-4 font-bold dark:text-gray-200">
           Cart
         </div>
-        <div className="py-16 min-h-16 font-bold text-gray-500 text-center dark:text-gray-300">
-          Your cart is empty.
+        <div className="">
+          {cartItems.length > 0 ? (
+            cartItems.map((item) => {
+              return (
+                <div className="flex w-full p-3">
+                  <img src={productImage} className="h-10" />
+                  <div>
+                    <div>{item.productName}</div>
+                    <div>
+                      {item.price} x {item.amount} <span>{item.price * item.amount}</span>
+                    </div>
+                  </div>
+                  <Delete />
+                </div>
+              );
+            })
+          ) : (
+            <div className="py-16 min-h-16 font-bold text-gray-500 text-center dark:text-gray-300">
+              Your cart is empty.
+            </div>
+          )}
+          {cartItems.length > 0 && <div className="btn w-full m-3">Check out</div>}
         </div>
       </div>
     </div>

@@ -1,19 +1,27 @@
+import { useState } from "react";
 import "./App.css";
-
-import { data } from "../constants/data";
-
-import { Logo } from "./assets/logo";
-import snickerOne from "./assets/productPhotos/image-product-1.jpg";
-import profilePicture from "./assets/avatars/image-amyrobson.png";
 
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
+import { data } from "../constants/data";
+import { Logo } from "./assets/logo";
+import snickerOne from "./assets/productPhotos/image-product-1.jpg";
+import profilePicture from "./assets/avatars/image-amyrobson.png";
+import { cartItem } from "./types";
+
 import { Drawer, Navigation, Cart } from "../components";
 import { Add, Remove } from "@mui/icons-material";
-import { useState } from "react";
 
 function App() {
   const [count, setCount] = useState(0);
+  const [cartItems, setCartItems] = useState<cartItem[]>([]);
+
+  const addItemsToCart = () => {
+    setCartItems([
+      { productName: "Fall Limited Edition Sneakers", price: 125, amount: count },
+    ]);
+  };
+
   return (
     <>
       <div className="font-KumbhSans max-w-screen-xl mx-auto text-left dark:text-gray-200">
@@ -25,7 +33,7 @@ function App() {
           </nav>
           <div className="flex items-center gap-6">
             {/* hover drop down */}
-            <Cart />
+            <Cart cartItems={cartItems} />
             <img
               src={profilePicture}
               className="h-12 rounded-full border-orange-500 border-2 cursor-pointer"
@@ -59,7 +67,6 @@ function App() {
               <div className="dark:text-gray-400 line-through mt-1 text-lg">$250.00</div>
             </div>
 
-            {/* counter do add number of articles */}
             <div className="flex justify-between items-center dark:bg-gray-700 bg-gray-100 rounded-xl p-1">
               <div
                 className="btn p-2 bg-transparent border-none hover:bg-orange-200 hover:text-orange-500 active:bg-orange-300 rounded-xl"
@@ -83,7 +90,10 @@ function App() {
                 <Remove fontSize="large" />
               </div>
             </div>
-            <div className="btn flex gap-5 dark:bg-orange-600 bg-orange-500 text-gray-100 rounded-xl mt-2 hover:bg-orange-200 hover:text-orange-500 active:bg-orange-300">
+            <div
+              className="btn flex gap-5 dark:bg-orange-600 bg-orange-500 text-gray-100 rounded-xl mt-2 hover:bg-orange-200 hover:text-orange-500 active:bg-orange-300"
+              onClick={addItemsToCart}
+            >
               <ShoppingCartIcon />
               Add to cart
             </div>
