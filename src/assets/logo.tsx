@@ -1,6 +1,6 @@
 export const Logo = () => (
   <svg
-    width="auto"
+    width="150"
     height="20"
     xmlns="http://www.w3.org/2000/svg"
     className="dark:fill-gray-200 fill-gray-900"

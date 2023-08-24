@@ -6,20 +6,53 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { data } from "../constants/data";
 import { Logo } from "./assets/logo";
 import snickerOne from "./assets/productPhotos/image-product-1.jpg";
+import snickerTwo from "./assets/productPhotos/image-product-2.jpg";
+import snickerThree from "./assets/productPhotos/image-product-3.jpg";
+import snickerFour from "./assets/productPhotos/image-product-4.jpg";
 import profilePicture from "./assets/avatars/image-amyrobson.png";
-import { cartItem } from "./types";
+import { cartItem, photos } from "./types";
 
 import { Drawer, Navigation, Cart } from "../components";
-import { Add, Remove } from "@mui/icons-material";
+import { Add, KeyboardArrowLeft, KeyboardArrowRight, Remove } from "@mui/icons-material";
 
 function App() {
   const [count, setCount] = useState(0);
   const [cartItems, setCartItems] = useState<cartItem[]>([]);
+  const [photos, setPhotos] = useState<photos>({
+    currentPhoto: { id: 1, src: snickerOne },
+    allPhotos: {
+      "1": { id: 1, src: snickerOne },
+      "2": { id: 2, src: snickerTwo },
+      "3": { id: 3, src: snickerThree },
+      "4": { id: 4, src: snickerFour },
+    },
+    photosCount: 4,
+  });
 
   const addItemsToCart = () => {
     setCartItems([
       { productName: "Fall Limited Edition Sneakers", price: 125, amount: count },
     ]);
+  };
+
+  const changeCurrentPhoto = (index: number) => {
+    console.log(index);
+    console.log(index < 0);
+    console.log(index > photos.photosCount);
+    switch (true) {
+      case index === 0:
+        index = photos.photosCount;
+        break;
+      case index > photos.photosCount:
+        index = 1;
+        break;
+    }
+    setPhotos((prevState) => {
+      return {
+        ...prevState,
+        currentPhoto: prevState.allPhotos[index.toString()],
+      };
+    });
   };
 
   return (
@@ -32,20 +65,54 @@ function App() {
             <Navigation />
           </nav>
           <div className="flex items-center gap-6">
-            {/* hover drop down */}
             <Cart cartItems={cartItems} />
             <img
               src={profilePicture}
-              className="h-12 rounded-full border-orange-500 border-2 cursor-pointer"
+              className="h-10 md:h-12 rounded-full border-orange-500 border-2 cursor-pointer"
             />
           </div>
         </header>
 
-        <section id="product-page">
-          <div id="product-photos" className="h-96 w-full overflow-hidden">
-            <img src={snickerOne} />
+        <section
+          id="product-page"
+          className="md:grid grid-cols-2 gap-10 justify-items-center mt-16"
+        >
+          {/* Make it full view when onclick on photo */}
+          <div id="product-photos" className="md:max-w-[500px] w-full">
+            <div className="h-96 overflow-hidden md:rounded-2xl relative">
+              <div
+                className="btn absolute top-[45%] left-4 bg-gray-50 btn-circle flex justify-center items-center"
+                onClick={() => changeCurrentPhoto(Number(photos.currentPhoto.id) - 1)}
+              >
+                <KeyboardArrowLeft fontSize="large" />
+              </div>
+              <img src={photos.currentPhoto.src} />
+              <div
+                className="btn absolute top-[45%] right-4 bg-gray-50 btn-circle flex justify-center items-center"
+                onClick={() => changeCurrentPhoto(Number(photos.currentPhoto.id) + 1)}
+              >
+                <KeyboardArrowRight fontSize="large" />
+              </div>
+            </div>
+            <div className="md:grid grid-cols-4 gap-5 mt-6 hidden">
+              {Object.values(photos.allPhotos).map((photo) => (
+                <div
+                  className={`h-auto w-auto overflow-hidden rounded-xl hover:opacity-80 cursor-pointer ${
+                    photos.currentPhoto.id === photo.id
+                      ? "border-2 border-orange-500"
+                      : ""
+                  }`}
+                  onClick={() => changeCurrentPhoto(photo.id)}
+                >
+                  <img
+                    src={photo.src}
+                    className={photo.id === photos.currentPhoto.id ? "opacity-60" : ""}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
-          <div id="product-details" className="p-5">
+          <div id="product-details" className="p-5 md:max-w-[500px] w-full">
             <div className=" uppercase dark:text-orange-400 text-orange-500 text-sm tracking-widest">
               Sneaker Company
             </div>
