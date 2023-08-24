@@ -12,8 +12,8 @@ import snickerFour from "./assets/productPhotos/image-product-4.jpg";
 import profilePicture from "./assets/avatars/image-amyrobson.png";
 import { cartItem, photos } from "./types";
 
-import { Drawer, Navigation, Cart } from "../components";
-import { Add, KeyboardArrowLeft, KeyboardArrowRight, Remove } from "@mui/icons-material";
+import { Drawer, Navigation, Cart, ProductCarousel } from "../components";
+import { Add, Remove } from "@mui/icons-material";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -36,9 +36,6 @@ function App() {
   };
 
   const changeCurrentPhoto = (index: number) => {
-    console.log(index);
-    console.log(index < 0);
-    console.log(index > photos.photosCount);
     switch (true) {
       case index === 0:
         index = photos.photosCount;
@@ -75,51 +72,25 @@ function App() {
 
         <section
           id="product-page"
-          className="md:grid grid-cols-2 gap-10 justify-items-center mt-16"
+          className="md:grid grid-cols-2 px-10 gap-16 my-16 justify-between items-center"
         >
           {/* Make it full view when onclick on photo */}
-          <div id="product-photos" className="md:max-w-[500px] w-full">
-            <div className="h-96 overflow-hidden md:rounded-2xl relative">
-              <div
-                className="btn absolute top-[45%] left-4 bg-gray-50 btn-circle flex justify-center items-center"
-                onClick={() => changeCurrentPhoto(Number(photos.currentPhoto.id) - 1)}
-              >
-                <KeyboardArrowLeft fontSize="large" />
-              </div>
-              <img src={photos.currentPhoto.src} />
-              <div
-                className="btn absolute top-[45%] right-4 bg-gray-50 btn-circle flex justify-center items-center"
-                onClick={() => changeCurrentPhoto(Number(photos.currentPhoto.id) + 1)}
-              >
-                <KeyboardArrowRight fontSize="large" />
-              </div>
-            </div>
-            <div className="md:grid grid-cols-4 gap-5 mt-6 hidden">
-              {Object.values(photos.allPhotos).map((photo) => (
-                <div
-                  className={`h-auto w-auto overflow-hidden rounded-xl hover:opacity-80 cursor-pointer ${
-                    photos.currentPhoto.id === photo.id
-                      ? "border-2 border-orange-500"
-                      : ""
-                  }`}
-                  onClick={() => changeCurrentPhoto(photo.id)}
-                >
-                  <img
-                    src={photo.src}
-                    className={photo.id === photos.currentPhoto.id ? "opacity-60" : ""}
-                  />
-                </div>
-              ))}
-            </div>
+          <div id="product-photos" className="w-full relative">
+            <ProductCarousel
+              products={photos.allPhotos}
+              currentProduct={photos.currentPhoto}
+              changeCurrentPhoto={changeCurrentPhoto}
+              productsCount={photos.photosCount}
+            />
           </div>
-          <div id="product-details" className="p-5 md:max-w-[500px] w-full">
-            <div className=" uppercase dark:text-orange-400 text-orange-500 text-sm tracking-widest">
+          <div id="product-details" className="p-5 w-full">
+            <div className="uppercase dark:text-orange-400 text-orange-500 text-sm tracking-widest">
               Sneaker Company
             </div>
-            <div className="my-5 text-4xl font-semibold">
+            <div className="w-96 my-5 text-4xl font-semibold">
               Fall Limited Edition Sneakers
             </div>
-            <p className="text-xl dark:text-gray-400">
+            <p className="w-[450px] text-xl dark:text-gray-400">
               These low-profile sneakers are your perfect casual wear companion. Featuring
               a durable rubber outer sole, they’ll withstand everything the weather can
               offer.
@@ -134,35 +105,37 @@ function App() {
               <div className="dark:text-gray-400 line-through mt-1 text-lg">$250.00</div>
             </div>
 
-            <div className="flex justify-between items-center dark:bg-gray-700 bg-gray-100 rounded-xl p-1">
-              <div
-                className="btn p-2 bg-transparent border-none hover:bg-orange-200 hover:text-orange-500 active:bg-orange-300 rounded-xl"
-                onClick={() =>
-                  setCount((prevState) => {
-                    return prevState + 1;
-                  })
-                }
-              >
-                <Add fontSize="large" />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              <div className="flex justify-around items-center dark:bg-gray-700 bg-gray-100 rounded-xl">
+                <div
+                  className="btn p-2 bg-transparent border-none hover:bg-orange-200 hover:text-orange-500 active:bg-orange-300 rounded-xl"
+                  onClick={() =>
+                    setCount((prevState) => {
+                      return prevState + 1;
+                    })
+                  }
+                >
+                  <Add fontSize="large" />
+                </div>
+                <div className="dark:text-gray-50 text-xl text-gray-800">{count}</div>
+                <div
+                  className="btn p-2 bg-transparent border-none hover:bg-orange-200 hover:text-orange-500 active:bg-orange-300 rounded-xl"
+                  onClick={() =>
+                    setCount((prevState) => {
+                      return prevState - 1 < 0 ? prevState : prevState - 1;
+                    })
+                  }
+                >
+                  <Remove fontSize="large" />
+                </div>
               </div>
-              <div className="dark:text-gray-50 text-xl text-gray-800">{count}</div>
               <div
-                className="btn p-2 bg-transparent border-none hover:bg-orange-200 hover:text-orange-500 active:bg-orange-300 rounded-xl"
-                onClick={() =>
-                  setCount((prevState) => {
-                    return prevState - 1 < 0 ? prevState : prevState - 1;
-                  })
-                }
+                className="p-5 flex gap-5 dark:bg-orange-600 bg-orange-500 text-gray-100 rounded-xl hover:bg-orange-200 hover:text-orange-500 active:bg-orange-300 col-span-2 justify-center items-center"
+                onClick={addItemsToCart}
               >
-                <Remove fontSize="large" />
+                <ShoppingCartIcon />
+                Add to cart
               </div>
-            </div>
-            <div
-              className="btn flex gap-5 dark:bg-orange-600 bg-orange-500 text-gray-100 rounded-xl mt-2 hover:bg-orange-200 hover:text-orange-500 active:bg-orange-300"
-              onClick={addItemsToCart}
-            >
-              <ShoppingCartIcon />
-              Add to cart
             </div>
           </div>
         </section>
