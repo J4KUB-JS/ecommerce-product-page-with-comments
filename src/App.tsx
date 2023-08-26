@@ -9,6 +9,9 @@ import snickerOne from "./assets/productPhotos/image-product-1.jpg";
 import snickerTwo from "./assets/productPhotos/image-product-2.jpg";
 import snickerThree from "./assets/productPhotos/image-product-3.jpg";
 import snickerFour from "./assets/productPhotos/image-product-4.jpg";
+import snickerFive from "./assets/productPhotos/image-product-5.png";
+import snickerSix from "./assets/productPhotos/image-product-6.png";
+import snickerSeven from "./assets/productPhotos/image-product-7.png";
 import profilePicture from "./assets/avatars/image-amyrobson.png";
 import { cartItem, photos } from "./types";
 
@@ -37,15 +40,20 @@ function App() {
 
   const addItemsToCart = () => {
     setCartItems((prevState) => {
-      return [
-        ...prevState,
-        {
-          productName: "Fall Limited Edition Sneakers",
-          price: 125,
-          size: selectedSize,
-          amount: 1,
-        } as cartItem,
-      ];
+      const cartItem: cartItem = {
+        cartItemId: prevState.length,
+        productName: "Fall Limited Edition Sneakers",
+        price: 125,
+        size: selectedSize ? selectedSize : 0,
+        amount: 1,
+      };
+      return [...prevState, cartItem];
+    });
+  };
+
+  const removeItemsFromCart = (itemId: number) => {
+    setCartItems((prevState) => {
+      return prevState.filter((item) => item.cartItemId !== itemId);
     });
   };
 
@@ -76,7 +84,7 @@ function App() {
             <Navigation />
           </nav>
           <div className="flex items-center gap-6">
-            <Cart cartItems={cartItems} />
+            <Cart cartItems={cartItems} removeItemHandler={removeItemsFromCart} />
             <img
               src={profilePicture}
               className="h-10 md:h-12 rounded-full border-orange-500 border-2 cursor-pointer"
@@ -119,24 +127,28 @@ function App() {
               <div className="dark:text-gray-400 line-through mt-1 text-lg">$250.00</div>
             </div>
 
-            <div className="md:grid md:grid-cols-3 gap-5">
-              <div className="dropdown dropdown-hover md:dropdown-bottom dropdown-top w-full md:mb-0 mb-5">
-                <label tabIndex={0} className="btn w-full">
-                  Size: {selectedSize}
-                </label>
-                <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-32 h-40">
+            <div>
+              <div className="mb-5">
+                <div tabIndex={0} className="font-bold text-lg mb-2">
+                  Sizes:
+                </div>
+                <div className="flex flex-wrap gap-4">
                   {[...Array(46).keys()].slice(38, 46).map((size) => (
-                    <li
-                      className="flex items-center"
+                    <div
+                      className={`btn text-gray-900 hover:text-gray-900 bg-gray-100 hover:bg-orange-200 hover:border-orange-500 ${
+                        size === selectedSize
+                          ? " btn-outline border-orange-500 bg-orange-200 "
+                          : ""
+                      }`}
                       onClick={() => setSelectedSize(size)}
                     >
-                      <a>{size}</a>
-                    </li>
+                      {size}
+                    </div>
                   ))}
-                </ul>
+                </div>
               </div>
               <div
-                className={`p-3 flex gap-5 dark:bg-orange-600 bg-orange-500 text-gray-100 rounded-xl hover:bg-orange-400 active:bg-orange-300 col-span-2 justify-center items-center ${
+                className={`py-4 flex gap-5 dark:bg-orange-600 bg-orange-500 text-gray-100 rounded-xl hover:bg-orange-400 active:bg-orange-300 col-span-2 justify-center items-center ${
                   selectedSize === null
                     ? " btn-disabled dark:bg-orange-400 bg-orange-300"
                     : ""
@@ -149,27 +161,34 @@ function App() {
             </div>
           </div>
         </section>
-        <section id="about-and-comments" className="w-full">
-          <div className="tabs border-b-2 px-5">
+        <section id="about-and-comments" className="w-full px-5">
+          <div className="tabs relative">
+            <div className="absolute h-[2px] w-full bg-gray-300 bottom-0"></div>
             <a
-              className={`tab tab-lg tab-bordered ${
-                activeTab === "about" ? "tab-active" : ""
+              className={`tab tab-lg tab-bordered z-10 ${
+                activeTab === "about"
+                  ? "border-orange-500 text-orange-500"
+                  : "border-gray-300 hover:border-gray-900 hover:text-gray-900"
               }`}
               onClick={() => setActiveTab("about")}
             >
               Details
             </a>
             <a
-              className={`tab tab-lg tab-bordered ${
-                activeTab === "opinions" ? "tab-active" : ""
+              className={`tab tab-lg tab-bordered z-10 ${
+                activeTab === "opinions"
+                  ? "border-orange-500 text-orange-500"
+                  : "border-gray-300 hover:border-gray-900 hover:text-gray-900"
               }`}
               onClick={() => setActiveTab("opinions")}
             >
               Opinions
             </a>
             <a
-              className={`tab tab-lg tab-bordered ${
-                activeTab === "similar-products" ? "tab-active" : ""
+              className={`tab tab-lg tab-bordered z-10 ${
+                activeTab === "similar-products"
+                  ? "border-orange-500 text-orange-500"
+                  : "border-gray-300 hover:border-gray-900 hover:text-gray-900"
               }`}
               onClick={() => setActiveTab("similar-products")}
             >
@@ -265,7 +284,36 @@ function App() {
             </div>
           )}
           {activeTab === "similar-products" && (
-            <div className="p-10">Similar products</div>
+            <div className="p-10 flex flex-wrap gap-6">
+              <div className="cursor-pointer">
+                <div className="w-64 rounded-xl overflow-hidden h-56">
+                  <img src={snickerFive} />
+                </div>
+                <div className="font-bold text-lg w-[15ch] mt-2 mb-1">
+                  Eclipse Shadowstride
+                </div>
+                <div className="text-sm">$105.00</div>
+              </div>
+              <div className="cursor-pointer">
+                <div className="w-64 rounded-xl overflow-hidden h-56">
+                  <img src={snickerSix} />
+                </div>
+                <div className="font-bold text-lg w-[15ch] mt-2 mb-1">
+                  Azure Horizon Walkers
+                </div>
+                <span className="text-sm line-through mr-2">$220.00</span>
+                <span className="text-sm ">$190.00</span>
+              </div>
+              <div className="cursor-pointer">
+                <div className="w-64 rounded-xl overflow-hidden h-56">
+                  <img src={snickerSeven} />
+                </div>
+                <div className="font-bold text-lg w-[15ch] mt-2 mb-1">
+                  Radiant Nova Kicks
+                </div>
+                <div className="text-sm">$155.00</div>
+              </div>
+            </div>
           )}
         </section>
       </div>

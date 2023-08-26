@@ -4,10 +4,10 @@ import productImage from "../src/assets/productPhotos/image-product-1.jpg";
 import { Delete } from "@mui/icons-material";
 interface CartProps {
   cartItems: cartItem[];
-  // removeItemHandler: ()
+  removeItemHandler: (itemId: number) => void;
 }
 
-export const Cart = ({ cartItems }: CartProps) => {
+export const Cart = ({ cartItems, removeItemHandler }: CartProps) => {
   return (
     <div className="dropdown dropdown-hover dropdown-end">
       <label
@@ -29,8 +29,6 @@ export const Cart = ({ cartItems }: CartProps) => {
         <div className="border-b-2 border-gray-200 dark:border-gray-100 p-4 font-bold dark:text-gray-200">
           Cart
         </div>
-        {/* TODO: Improve styling of cart */}
-        {/* TODO: Full width on mobile */}
         <div className="p-5">
           {cartItems.length > 0 ? (
             cartItems.map((item) => {
@@ -41,10 +39,12 @@ export const Cart = ({ cartItems }: CartProps) => {
                     <div className="text-gray-500 text-lg">{item.productName}</div>
                     <div className="font-bold">
                       Size: {item.size} - Price: ${item.price}
-                      {/* x {item.amount} <span>{item.price * item.amount}</span> */}
                     </div>
                   </div>
-                  <div className="text-gray-500">
+                  <div
+                    className="text-gray-500 cursor-pointer"
+                    onClick={() => removeItemHandler(item.cartItemId)}
+                  >
                     <Delete />
                   </div>
                 </div>

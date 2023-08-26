@@ -1,4 +1,5 @@
 export interface cartItem {
+  cartItemId: number;
   productName: string;
   price: number;
   amount: number;
