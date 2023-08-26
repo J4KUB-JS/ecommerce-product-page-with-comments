@@ -13,11 +13,14 @@ import profilePicture from "./assets/avatars/image-amyrobson.png";
 import { cartItem, photos } from "./types";
 
 import { Drawer, Navigation, Cart, ProductCarousel } from "../components";
-import { Add, Remove } from "@mui/icons-material";
+
+//Modify Mockups to include some ideas from mockups
+//TODO (Optional): add different sections
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [selectedSize, setSelectedSize] = useState<number | null>(null);
   const [cartItems, setCartItems] = useState<cartItem[]>([]);
+  const [activeTab, setActiveTab] = useState<"about" | "opinions">("about");
   const [photos, setPhotos] = useState<photos>({
     currentPhoto: { id: 1, src: snickerOne },
     allPhotos: {
@@ -30,9 +33,17 @@ function App() {
   });
 
   const addItemsToCart = () => {
-    setCartItems([
-      { productName: "Fall Limited Edition Sneakers", price: 125, amount: count },
-    ]);
+    setCartItems((prevState) => {
+      return [
+        ...prevState,
+        {
+          productName: "Fall Limited Edition Sneakers",
+          price: 125,
+          size: selectedSize,
+          amount: 1,
+        } as cartItem,
+      ];
+    });
   };
 
   const changeCurrentPhoto = (index: number) => {
@@ -72,7 +83,7 @@ function App() {
 
         <section
           id="product-page"
-          className="md:grid grid-cols-2 px-10 gap-16 my-16 justify-between items-center"
+          className="md:grid grid-cols-2 md:px-10 gap-16 my-16 justify-between items-center"
         >
           {/* Make it full view when onclick on photo */}
           <div id="product-photos" className="w-full relative">
@@ -106,31 +117,27 @@ function App() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              <div className="flex justify-around items-center dark:bg-gray-700 bg-gray-100 rounded-xl">
-                <div
-                  className="btn p-2 bg-transparent border-none hover:bg-orange-200 hover:text-orange-500 active:bg-orange-300 rounded-xl"
-                  onClick={() =>
-                    setCount((prevState) => {
-                      return prevState + 1;
-                    })
-                  }
-                >
-                  <Add fontSize="large" />
-                </div>
-                <div className="dark:text-gray-50 text-xl text-gray-800">{count}</div>
-                <div
-                  className="btn p-2 bg-transparent border-none hover:bg-orange-200 hover:text-orange-500 active:bg-orange-300 rounded-xl"
-                  onClick={() =>
-                    setCount((prevState) => {
-                      return prevState - 1 < 0 ? prevState : prevState - 1;
-                    })
-                  }
-                >
-                  <Remove fontSize="large" />
-                </div>
+              <div className="dropdown dropdown-hover">
+                <label tabIndex={0} className="btn w-full">
+                  Size: {selectedSize}
+                </label>
+                <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-32 h-40">
+                  {[...Array(46).keys()].slice(38, 46).map((size) => (
+                    <li
+                      className="flex items-center"
+                      onClick={() => setSelectedSize(size)}
+                    >
+                      <a>{size}</a>
+                    </li>
+                  ))}
+                </ul>
               </div>
               <div
-                className="p-5 flex gap-5 dark:bg-orange-600 bg-orange-500 text-gray-100 rounded-xl hover:bg-orange-200 hover:text-orange-500 active:bg-orange-300 col-span-2 justify-center items-center"
+                className={`p-2 flex gap-5 dark:bg-orange-600 bg-orange-500 text-gray-100 rounded-xl hover:bg-orange-400 active:bg-orange-300 col-span-2 justify-center items-center ${
+                  selectedSize === null
+                    ? " btn-disabled dark:bg-orange-400 bg-orange-300"
+                    : ""
+                }`}
                 onClick={addItemsToCart}
               >
                 <ShoppingCartIcon />
@@ -139,10 +146,33 @@ function App() {
             </div>
           </div>
         </section>
-        <section id="comments">
-          {data.comments.map((item, index) => {
-            return <div key={index}>{item.content}</div>;
-          })}
+        <section id="about-and-comments" className="w-full">
+          <div className="tabs border-b-2 px-5">
+            <a
+              className={`tab tab-lg tab-bordered ${
+                activeTab === "about" ? "tab-active" : ""
+              }`}
+              onClick={() => setActiveTab("about")}
+            >
+              Details
+            </a>
+            <a
+              className={`tab tab-lg tab-bordered ${
+                activeTab === "opinions" ? "tab-active" : ""
+              }`}
+              onClick={() => setActiveTab("opinions")}
+            >
+              Opinions
+            </a>
+          </div>
+          {activeTab === "about" && <div>Product details</div>}
+          {activeTab === "opinions" && (
+            <div>
+              {data.comments.map((item, index) => {
+                return <div key={index}>{item.content}</div>;
+              })}
+            </div>
+          )}
         </section>
       </div>
       <footer className="font-KumbhSans bg-gray-800 text-gray-50 dark:bg-gray-200 dark:text-gray-800 py-1">

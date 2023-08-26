@@ -2,6 +2,7 @@ export interface cartItem {
   productName: string;
   price: number;
   amount: number;
+  size: number;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

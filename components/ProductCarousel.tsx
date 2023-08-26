@@ -28,7 +28,7 @@ export const ProductCarousel = ({
   // TODO: Refactor not to use href and id
   return (
     <>
-      <div className="carousel w-[500px] h-auto md:rounded-2xl relative">
+      <div className="carousel md:max-w-[500px] h-auto md:rounded-2xl relative">
         {Object.values(products).map((product) => {
           return (
             <div id={`item${product.id}`} className="carousel-item relative w-full">
@@ -53,7 +53,7 @@ export const ProductCarousel = ({
           );
         })}
       </div>
-      <div className="w-[500px] md:grid grid-cols-4 mt-6 hidden gap-5">
+      <div className="md:max-w-[500px] md:grid grid-cols-4 mt-6 hidden gap-5">
         {Object.values(products).map((product) => {
           return (
             <a
