@@ -1,7 +1,9 @@
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { Delete } from "@mui/icons-material";
+
 import { cartItem } from "../src/types";
 import productImage from "../src/assets/productPhotos/image-product-1.jpg";
-import { Delete } from "@mui/icons-material";
+
 interface CartProps {
   cartItems: cartItem[];
   removeItemHandler: (itemId: number) => void;

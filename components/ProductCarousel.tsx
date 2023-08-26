@@ -1,5 +1,6 @@
-import { photo, photos } from "../src/types";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
+
+import { photo, photos } from "../src/types";
 
 interface ProductCarouselProps {
   products: photos["allPhotos"];

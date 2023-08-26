@@ -2,8 +2,8 @@ import { useState } from "react";
 import "./App.css";
 
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { Star } from "@mui/icons-material";
 
-import { sneakerReviews } from "../constants/data";
 import { Logo } from "./assets/logo";
 import snickerOne from "./assets/productPhotos/image-product-1.jpg";
 import snickerTwo from "./assets/productPhotos/image-product-2.jpg";
@@ -13,13 +13,10 @@ import snickerFive from "./assets/productPhotos/image-product-5.png";
 import snickerSix from "./assets/productPhotos/image-product-6.png";
 import snickerSeven from "./assets/productPhotos/image-product-7.png";
 import profilePicture from "./assets/avatars/image-amyrobson.png";
+
 import { cartItem, photos } from "./types";
-
+import { sneakerReviews } from "../constants/data";
 import { Drawer, Navigation, Cart, ProductCarousel } from "../components";
-import { Star } from "@mui/icons-material";
-
-//Modify Mockups to include some ideas from mockups
-//TODO (Optional): add different sections
 
 function App() {
   const [selectedSize, setSelectedSize] = useState<number | null>(null);
@@ -96,7 +93,6 @@ function App() {
           id="product-page"
           className="md:grid grid-cols-2 md:px-10 gap-16 md:my-16 my-8 justify-between items-center"
         >
-          {/* Make it full view when onclick on photo */}
           <div id="product-photos" className="w-full relative">
             <ProductCarousel
               products={photos.allPhotos}
