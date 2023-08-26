@@ -3,7 +3,7 @@ import "./App.css";
 
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
-import { data } from "../constants/data";
+import { sneakerReviews } from "../constants/data";
 import { Logo } from "./assets/logo";
 import snickerOne from "./assets/productPhotos/image-product-1.jpg";
 import snickerTwo from "./assets/productPhotos/image-product-2.jpg";
@@ -13,6 +13,7 @@ import profilePicture from "./assets/avatars/image-amyrobson.png";
 import { cartItem, photos } from "./types";
 
 import { Drawer, Navigation, Cart, ProductCarousel } from "../components";
+import { Star } from "@mui/icons-material";
 
 //Modify Mockups to include some ideas from mockups
 //TODO (Optional): add different sections
@@ -20,7 +21,9 @@ import { Drawer, Navigation, Cart, ProductCarousel } from "../components";
 function App() {
   const [selectedSize, setSelectedSize] = useState<number | null>(null);
   const [cartItems, setCartItems] = useState<cartItem[]>([]);
-  const [activeTab, setActiveTab] = useState<"about" | "opinions">("about");
+  const [activeTab, setActiveTab] = useState<"about" | "opinions" | "similar-products">(
+    "about"
+  );
   const [photos, setPhotos] = useState<photos>({
     currentPhoto: { id: 1, src: snickerOne },
     allPhotos: {
@@ -83,7 +86,7 @@ function App() {
 
         <section
           id="product-page"
-          className="md:grid grid-cols-2 md:px-10 gap-16 my-16 justify-between items-center"
+          className="md:grid grid-cols-2 md:px-10 gap-16 md:my-16 my-8 justify-between items-center"
         >
           {/* Make it full view when onclick on photo */}
           <div id="product-photos" className="w-full relative">
@@ -116,8 +119,8 @@ function App() {
               <div className="dark:text-gray-400 line-through mt-1 text-lg">$250.00</div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              <div className="dropdown dropdown-hover">
+            <div className="md:grid md:grid-cols-3 gap-5">
+              <div className="dropdown dropdown-hover md:dropdown-bottom dropdown-top w-full md:mb-0 mb-5">
                 <label tabIndex={0} className="btn w-full">
                   Size: {selectedSize}
                 </label>
@@ -133,7 +136,7 @@ function App() {
                 </ul>
               </div>
               <div
-                className={`p-2 flex gap-5 dark:bg-orange-600 bg-orange-500 text-gray-100 rounded-xl hover:bg-orange-400 active:bg-orange-300 col-span-2 justify-center items-center ${
+                className={`p-3 flex gap-5 dark:bg-orange-600 bg-orange-500 text-gray-100 rounded-xl hover:bg-orange-400 active:bg-orange-300 col-span-2 justify-center items-center ${
                   selectedSize === null
                     ? " btn-disabled dark:bg-orange-400 bg-orange-300"
                     : ""
@@ -164,14 +167,105 @@ function App() {
             >
               Opinions
             </a>
+            <a
+              className={`tab tab-lg tab-bordered ${
+                activeTab === "similar-products" ? "tab-active" : ""
+              }`}
+              onClick={() => setActiveTab("similar-products")}
+            >
+              Similar Products
+            </a>
           </div>
-          {activeTab === "about" && <div>Product details</div>}
+          {activeTab === "about" && (
+            <div className="p-10">
+              <div className="mb-5 text-4xl font-semibold">
+                Fall Limited Edition Sneakers
+              </div>
+              <div className="grid md:grid-cols-2 gap-10 grid-cols-1">
+                <div>
+                  <div className="font-bold text-lg mb-5">About</div>
+                  <p className="max-w-[50ch] text-gray-500 dark:text-gray-400">
+                    Introducing the Fall Limited Edition Sneakers – a harmonious blend of
+                    style and functionality for the fashion-conscious. Designed as the
+                    ultimate companions for your casual fall outings, these low-profile
+                    wonders redefine your footwear experience with a meticulously crafted
+                    rubber outer sole that's a testament to durability, conquering diverse
+                    weather conditions with ease. Beneath the surface, they prioritize
+                    comfort, wrapping your feet in plush embrace while allowing
+                    breathability. Whether wandering rain-kissed pavements or savoring
+                    autumn's crispness, these sneakers offer unmatched resilience. Not
+                    just shoes, but a fashion statement – they effortlessly merge
+                    practicality and elegance, a coveted addition to your collection. Step
+                    into sophistication and durability – step into these limited edition
+                    sneakers and conquer fall with every stride.
+                  </p>
+                </div>
+                <div className="">
+                  <div className="font-bold text-lg mb-5">Features</div>
+                  <p className="max-w-[50ch] text-gray-500 dark:text-gray-400">
+                    <b> - Durable Rubber Outer Sole:</b> These sneakers are equipped with
+                    a rugged rubber outer sole that is built to withstand various weather
+                    conditions, providing exceptional durability and traction on different
+                    surfaces.
+                  </p>
+                  <br />
+                  <p className="max-w-[50ch] text-gray-500 dark:text-gray-400">
+                    <b> - Low-Profile Design:</b> The sneakers feature a sleek low-profile
+                    design that effortlessly blends style and comfort, making them
+                    versatile for a wide range of outfits and occasions.
+                  </p>
+                  <br />
+                  <p className="max-w-[50ch] text-gray-500 dark:text-gray-400">
+                    <b> - Weather-Resistant Construction:</b> Designed to tackle fall
+                    weather challenges, these sneakers are crafted to resist moisture,
+                    ensuring your feet stay dry and comfortable even in rainy conditions.
+                  </p>
+                  <br />
+                  <p className="max-w-[50ch] text-gray-500 dark:text-gray-400">
+                    <b> - Lightweight Build:</b> Despite their durability, the sneakers
+                    maintain a lightweight build that doesn't weigh you down, ensuring
+                    easy and comfortable movement throughout the day.
+                  </p>
+                  <br />
+
+                  <br />
+                </div>
+              </div>
+            </div>
+          )}
           {activeTab === "opinions" && (
-            <div>
-              {data.comments.map((item, index) => {
-                return <div key={index}>{item.content}</div>;
+            <div className="p-10 grid md:grid-cols-2 grid-cols-1 gap-10">
+              {sneakerReviews.map((item, index) => {
+                return (
+                  <div key={index} className="bg-gray-100 rounded-xl px-6 py-4 shadow-md">
+                    <div className="font-bold text-lg mb-2">
+                      {item.name}
+                      <span className="ml-5">
+                        <span className={`${item.rating > 1 ? "text-orange-400" : ""}`}>
+                          <Star />
+                        </span>
+                        <span className={`${item.rating > 2 ? "text-orange-400" : ""}`}>
+                          <Star />
+                        </span>
+                        <span className={`${item.rating > 3 ? "text-orange-400" : ""}`}>
+                          <Star />
+                        </span>
+                        <span className={`${item.rating > 4 ? "text-orange-400" : ""}`}>
+                          <Star />
+                        </span>
+                        <span className={`${item.rating > 5 ? "text-orange-400" : ""}`}>
+                          <Star />
+                        </span>
+                      </span>
+                    </div>
+                    <div>{item.comment}</div>
+                  </div>
+                );
               })}
             </div>
+          )}
+          {activeTab === "similar-products" && (
+            <div className="p-10">Similar products</div>
           )}
         </section>
       </div>
