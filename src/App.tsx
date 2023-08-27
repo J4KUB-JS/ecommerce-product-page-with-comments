@@ -313,7 +313,7 @@ function App() {
           )}
         </section>
       </div>
-      <footer className="font-KumbhSans bg-gray-800 text-gray-50 dark:bg-gray-200 dark:text-gray-800 py-1">
+      <footer className="font-KumbhSans bg-gray-800 text-gray-50 dark:bg-gray-200 dark:text-gray-800 py-1 text-center">
         Challenge by{" "}
         <a
           href="https://www.frontendmentor.io/challenges/ecommerce-product-page-UPsZ9MJp6"
